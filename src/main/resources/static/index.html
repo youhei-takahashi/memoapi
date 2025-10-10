@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot API Client</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .note-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>📝 メモアプリクライアント</h1>
+
+<div id="error-message" class="error"></div>
+
+<h2>1. 新規メモ作成 (POST)</h2>
+<form id="create-form">
+    <input type="text" id="title" placeholder="タイトル" required>
+    <textarea id="content" placeholder="内容" required></textarea>
+    <button type="submit">メモを保存</button>
+</form>
+
+<hr>
+
+<h2>2. メモ一覧 (GET /api/notes)</h2>
+<button onclick="fetchNotes()">メモ一覧を更新</button>
+<div id="notes-list">
+</div>
+
+<hr>
+
+<h2>3. 個別メモ操作 (ID指定)</h2>
+<input type="number" id="note-id" placeholder="メモIDを入力" value="1">
+<button onclick="fetchNoteById()">IDで検索 (GET)</button>
+<button onclick="deleteNote()">削除 (DELETE)</button>
+
+<script src="app.js"></script>
+</body>
+</html>

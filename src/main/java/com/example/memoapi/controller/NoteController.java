@@ -49,6 +49,21 @@ public class NoteController {
 
         return ResponseEntity.ok(note);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        noteService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Note> update(@PathVariable long id,
+                                       @RequestBody Note note) {
+        noteService.update(note, id);
+
+        return ResponseEntity.ok(note);
+    }
 }
 
 

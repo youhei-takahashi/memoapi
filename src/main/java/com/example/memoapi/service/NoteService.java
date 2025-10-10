@@ -5,6 +5,7 @@ import com.example.memoapi.exception.NoteArgumentNotValidException;
 import com.example.memoapi.exception.NoteNotFoundException;
 import com.example.memoapi.repository.NoteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,5 +46,37 @@ public class NoteService {
         }
 
         return note;
+    }
+
+    public boolean delete(long id) {
+        if (!noteRepository.delete(id)) {
+            throw new NoteNotFoundException(id);
+        }
+
+        return true;
+    }
+
+    @Transactional
+    public Note update(Note note, long id) {
+        // title が空の場合のチェック
+        if (note.getTitle() == null || note.getTitle().isEmpty()) {
+            throw new NoteArgumentNotValidException("note title is empty");
+        }
+
+        // content が空の場合のチェック
+        if (note.getContent() == null || note.getContent().isEmpty()) {
+            throw new NoteArgumentNotValidException("note content is empty");
+        }
+
+        // 指定されたIDが存在しない場合のエラー
+        Note target = noteRepository.findById(id);
+        if (target == null) {
+            throw new NoteNotFoundException(id);
+        }
+
+        note.setId(id);
+        note.setCreatedAt(target.getCreatedAt());
+
+        return noteRepository.update(note);
     }
 }

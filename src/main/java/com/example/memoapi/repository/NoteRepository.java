@@ -1,6 +1,7 @@
 package com.example.memoapi.repository;
 
 import com.example.memoapi.dto.Note;
+import com.example.memoapi.exception.NoteNotFoundException;
 import com.example.memoapi.mapper.NoteMapper;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,17 @@ public class NoteRepository {
 
     public Note findById(long id) {
         return noteMapper.findById(id);
+    }
+
+    public boolean delete(long id) {
+        return noteMapper.delete(id) > 0;
+    }
+
+    public Note update(Note note) {
+        if (noteMapper.update(note) == 0) {
+            throw new NoteNotFoundException(note.getId());
+        }
+
+        return note;
     }
 }
