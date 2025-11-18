@@ -6,8 +6,15 @@
     <title>Spring Boot API Client</title>
     <style>
         body { font-family: sans-serif; margin: 20px; }
+        form { margin-bottom: 10px; }
+        input, textarea { display: block; width: 100%; max-width: 320px; margin: 4px 0 10px; padding: 6px; }
+        button { padding: 6px 12px; }
         .note-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-        .error { color: red; font-weight: bold; }
+        .error { color: red; font-weight: bold; margin-top: 10px; }
+        .auth-container { border: 1px solid #ddd; padding: 12px; margin-bottom: 20px; background-color: #fafafa; }
+        .auth-forms { display: flex; flex-wrap: wrap; gap: 20px; }
+        .auth-card { flex: 1 1 260px; min-width: 240px; border: 1px solid #ddd; padding: 12px; background-color: #fff; }
+        .auth-status { font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -15,6 +22,34 @@
 <h1>📝 メモアプリクライアント</h1>
 
 <div id="error-message" class="error"></div>
+
+<section class="auth-container">
+    <h2>0. ログイン / ユーザー登録</h2>
+    <p id="auth-status" class="auth-status">未ログイン</p>
+    <div class="auth-forms">
+        <div class="auth-card">
+            <h3>ログイン</h3>
+            <form id="login-form">
+                <label for="login-username">ユーザー名</label>
+                <input type="text" id="login-username" name="username" autocomplete="username" required>
+                <label for="login-password">パスワード</label>
+                <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+                <button type="submit">ログイン</button>
+            </form>
+        </div>
+        <div class="auth-card">
+            <h3>ユーザー登録</h3>
+            <form id="register-form">
+                <label for="register-username">ユーザー名</label>
+                <input type="text" id="register-username" name="username" required>
+                <label for="register-password">パスワード</label>
+                <input type="password" id="register-password" name="password" required>
+                <button type="submit">ユーザー登録</button>
+            </form>
+        </div>
+    </div>
+    <button id="logout-button" type="button">ログアウト</button>
+</section>
 
 <h2>1. 新規メモ作成 (POST)</h2>
 <form id="create-form">
@@ -27,8 +62,7 @@
 
 <h2>2. メモ一覧 (GET /api/notes)</h2>
 <button onclick="fetchNotes()">メモ一覧を更新</button>
-<div id="notes-list">
-</div>
+<div id="notes-list"></div>
 
 <hr>
 
